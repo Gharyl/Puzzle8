@@ -28,10 +28,11 @@ struct Puzzle8 {
     int heuristicCost = 0;
     
     //Initial state
+    //This is the default puzzle, change this if you want to change the default puzzle
     vector<vector<int>> state = {
-        {0,7,2},
-        {4,6,1},
-        {3,5,8}
+        {1,2,3},
+        {4,0,6},
+        {7,5,8}
     };
     
     //Goal state
