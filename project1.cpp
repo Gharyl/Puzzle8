@@ -29,9 +29,9 @@ struct Puzzle8 {
     
     //Initial state
     vector<vector<int>> state = {
-        {1,2,3},
-        {4,0,6},
-        {7,5,8}
+        {0,7,2},
+        {4,6,1},
+        {3,5,8}
     };
     
     //Goal state
@@ -108,14 +108,6 @@ void generalSearch( int method, Puzzle8& puzzle ){
     int const Misplaced   = 2;  //in a switch statement below
     int const Manhattan   = 3;  //
         
-    //This functor will be used in priority queue for Misplaced Tiles and Manhattan Distance methods
-    auto lessThan = []( Puzzle8* first, Puzzle8* second ){
-        return first->heuristicCost < second->heuristicCost;
-    };
-    
-    //This unexploredPriorityQueue is used for Misplaced Tiles and Manhattan Distance methods
-    priority_queue< Puzzle8*, vector<Puzzle8*>, decltype(lessThan) > unexploredPriorityQueue(lessThan);
-    
     queue<Puzzle8*>     unexploredQueue     = {};   //unexploredQueue and exploredQueue are for all search methods.
     vector<Puzzle8*>    exploredQueue       = {};   //
     
@@ -173,7 +165,7 @@ void generalSearch( int method, Puzzle8& puzzle ){
         
         //When goal state is reached, the functino returns
         if( currentState->state == puzzle.goal ){
-            printf("<-------------------------------------------------------------->\n\tGoal reached at depth %d. %lu states expanded.\n", currentState->depth, exploredQueue.size());
+            printf("<-------------------------------------------------------------->\n\tGoal reached at %d. %lu states expanded.\n", currentState->depth, exploredQueue.size());
             printf("\tMaximum queue size was %d\n\tProgram ending...\n<--------------------------------------------------------------->", maxQueueSize);
             return;
         }
@@ -266,7 +258,7 @@ void generalSearch( int method, Puzzle8& puzzle ){
                                 
                                 //Calculating manhattan distance based on the number that is misplaced
                                 if(       misplacedNumber == 1 ){   //Number 1 is misplaced
-                                    currentState->children[x].heuristicCost += abs( (row-0) + (col-0));
+                                    currentState->children[x].heuristicCost += abs(row-0) + abs(col-0);
                                 }else if( misplacedNumber == 2 ){   //Number 2 is misplaced
                                     currentState->children[x].heuristicCost += abs(row-0) + abs(col-1);
                                 }else if( misplacedNumber == 3 ){   //Number 3 is misplaced
